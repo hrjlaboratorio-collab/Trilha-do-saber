@@ -15,26 +15,35 @@ box-sizing:border-box;
 font-family:'Fredoka', sans-serif;
 }
 
-body{ background:#f4f7fb; }
+body{
+background:#f4f7fb;
+}
 
+/* HEADER */
 header{
 background:#58cc02;
 color:white;
 text-align:center;
 padding:50px 20px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+border-radius:0 0 30px 30px;
 }
 
-h1{ font-size:2.8rem; }
+header h1{
+font-size:2.8rem;
+}
 
-section{ padding:40px 8%; }
+/* SECTION */
+section{
+padding:40px 8%;
+}
 
 h2{
-margin-bottom:30px;
 text-align:center;
+margin-bottom:30px;
 color:#333;
 }
 
+/* BOTÕES DISCIPLINAS */
 .disciplinas{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -44,61 +53,72 @@ margin-bottom:40px;
 
 .botao{
 background:white;
-padding:30px;
-border-radius:20px;
+padding:35px;
+border-radius:25px;
 text-align:center;
 cursor:pointer;
-transition:0.3s;
-box-shadow:0 6px 15px rgba(0,0,0,0.08);
-font-size:1.2rem;
+font-size:1.3rem;
 font-weight:600;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+transition:.3s;
 }
 
-.botao:hover{ transform:translateY(-6px); }
+.botao:hover{
+transform:translateY(-8px);
+}
 
-.portugues{ border-top:8px solid #58cc02; }
-.matematica{ border-top:8px solid #ff9800; }
-.geografia{ border-top:8px solid #03a9f4; }
-.ciencias{ border-top:8px solid #9c27b0; }
-.historia{ border-top:8px solid #f44336; }
+/* CORES */
+.portugues{ border-top:10px solid #58cc02; }
+.matematica{ border-top:10px solid #ff9800; }
+.ciencias{ border-top:10px solid #9c27b0; }
+.artes{ border-top:10px solid #e91e63; }
+.geografia{ border-top:10px solid #03a9f4; }
+.historia{ border-top:10px solid #f44336; }
 
+/* SUBMENUS */
 .submenu{
 display:none;
-margin-top:30px;
-padding:30px;
 background:white;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
+border-radius:25px;
+padding:35px;
+box-shadow:0 15px 30px rgba(0,0,0,0.12);
+margin-top:30px;
 }
 
-.categoria{ margin-bottom:35px; }
+.categoria{
+margin-bottom:35px;
+}
 
 .categoria h3{
 margin-bottom:15px;
 color:#333;
 }
 
+/* LINKS */
 .links{
 display:flex;
 flex-wrap:wrap;
-gap:12px;
+gap:15px;
 }
 
 .links a{
-padding:14px 20px;
 background:#e5f7d4;
-color:#333;
+padding:15px 22px;
+border-radius:20px;
 text-decoration:none;
-border-radius:15px;
+color:#333;
 font-weight:600;
-transition:0.3s;
+transition:.3s;
 }
 
-.links a:hover{ transform:scale(1.05); }
+.links a:hover{
+transform:scale(1.08);
+}
 
+/* FOOTER */
 footer{
 text-align:center;
-padding:30px;
+padding:25px;
 color:#666;
 }
 </style>
@@ -125,108 +145,158 @@ document.getElementById(id).style.display='block';
 <div class="disciplinas">
 <div class="botao portugues" onclick="abrir('portugues')">📖 Português</div>
 <div class="botao matematica" onclick="abrir('matematica')">➕ Matemática</div>
-<div class="botao geografia" onclick="abrir('geografia')">🌎 Geografia</div>
 <div class="botao ciencias" onclick="abrir('ciencias')">🧪 Ciências</div>
+<div class="botao artes" onclick="abrir('artes')">🎨 Artes</div>
+<div class="botao geografia" onclick="abrir('geografia')">🌎 Geografia</div>
 <div class="botao historia" onclick="abrir('historia')">📚 História</div>
 </div>
 
 <!-- PORTUGUÊS -->
 <div id="portugues" class="submenu">
 
+  <!-- FAMÍLIAS SILÁBICAS -->
+  <div class="categoria">
+    <h3>Famílias Silábicas</h3>
+    <div class="links">
+      <a href="#">BA-BE-BI-BO-BU</a>
+      <a href="#">PA-PE-PI-PO-PU</a>
+      <a href="#">CA-CO-CU</a>
+      <a href="#">CE-CI</a>
+      <a href="#">QUA-QUE-QUI-QUO</a>
+      <a href="#">DA-DE-DI-DO-DU</a>
+      <a href="#">RA-RE-RI-RO-RU</a>
+
+      <a href="#">FA-FE-FI-FO-FU</a>
+      <a href="#">SA-SE-SI-SO-SU</a>
+      <a href="#">GA-GO-GU</a>
+      <a href="#">GE-GI-GUE-GUI</a>
+      <a href="#">TA-TE-TI-TO-TU</a>
+      <a href="#">JA-JE-JI-JO-JU</a>
+      <a href="#">VA-VE-VI-VO-VU</a>
+
+      <a href="#">LA-LE-LI-LO-LU</a>
+      <a href="#">XA-XE-XI-XO-XU</a>
+      <a href="#">MA-ME-MI-MO-MU</a>
+      <a href="#">ZA-ZE-ZI-ZO-ZU</a>
+      <a href="#">NA-NE-NI-NO-NU</a>
+    </div>
+  </div>
+
+  <!-- SÍLABAS COMPLEXAS -->
+  <div class="categoria">
+    <h3>Sílabas Complexas</h3>
+    <div class="links">
+      <a href="#">BR / BL</a>
+      <a href="#">CR / CL</a>
+      <a href="#">FR / FL</a>
+      <a href="#">PR / PL</a>
+      <a href="#">TR</a>
+    </div>
+  </div>
+
+  <!-- SUBSTANTIVOS -->
+  <div class="categoria">
+    <h3>Substantivos</h3>
+    <div class="links">
+      <a href="#">Próprio</a>
+      <a href="#">Comum</a>
+      <a href="#">Coletivo</a>
+      <a href="#">Concreto</a>
+      <a href="#">Abstrato</a>
+      <a href="#">Primitivo</a>
+      <a href="#">Derivado</a>
+      <a href="#">Simples</a>
+      <a href="#">Composto</a>
+    </div>
+  </div>
+
+  <!-- CLASSES DE PALAVRAS -->
+  <div class="categoria">
+    <h3>Classes de Palavras</h3>
+    <div class="links">
+      <a href="#">Adjetivo</a>
+      <a href="#">Verbo</a>
+      <a href="#">Pronome</a>
+      <a href="#">Artigo</a>
+      <a href="#">Advérbio</a>
+      <a href="#">Preposição</a>
+      <a href="#">Conjunção</a>
+      <a href="#">Interjeição</a>
+    </div>
+  </div>
+
+  <!-- INTERPRETAÇÃO -->
+  <div class="categoria">
+    <h3>Interpretação</h3>
+    <div class="links">
+      <a href="#">Interpretação de Texto</a>
+      <a href="#">Gêneros Textuais</a>
+      <a href="#">Produção Textual</a>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- MATEMÁTICA -->
+<div id="matematica" class="submenu">
 <div class="categoria">
-<h3>Famílias Silábicas</h3>
+<h3>Matemática</h3>
 <div class="links">
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-b">BA-BE-BI-BO-BU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-p">PA-PE-PI-PO-PU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-c">CA-CO-CU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-c">CE-CI</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-qu">QUA-QUE-QUI-QUO</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-d">DA-DE-DI-DO-DU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-r">RA-RE-RI-RO-RU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-f">FA-FE-FI-FO-FU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-s">SA-SE-SI-SO-SU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-g">GA-GO-GU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-g">GE-GI-GUE-GUI</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-t">TA-TE-TI-TO-TU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-j">JA-JE-JI-JO-JU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-v">VA-VE-VI-VO-VU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-l">LA-LE-LI-LO-LU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-x">XA-XE-XI-XO-XU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-m">MA-ME-MI-MO-MU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-z">ZA-ZE-ZI-ZO-ZU</a>
-
-<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-n">NA-NE-NI-NO-NU</a>
-
+<a href="#">Sequência Numérica</a>
+<a href="#">Tabuada</a>
+<a href="#">Divisão</a>
+<a href="#">Sistema Monetário</a>
+<a href="#">Dominó da Multiplicação</a>
+<a href="#">Desafio Matemático</a>
+</div>
 </div>
 </div>
 
+<!-- CIÊNCIAS -->
+<div id="ciencias" class="submenu">
 <div class="categoria">
-<h3>Sílabas Complexas</h3>
+<h3>Ciências</h3>
 <div class="links">
-<a target="_blank" href="https://wordwall.net/pt-br/community/br-bl">BR / BL</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/cr-cl">CR / CL</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/fr-fl">FR / FL</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/pr-pl">PR / PL</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/tr">TR</a>
+<a href="#">Carnívoros, Herbívoros e Onívoros</a>
+<a href="#">Partes do Corpo Humano</a>
+<a href="#">O Planeta Terra</a>
+</div>
 </div>
 </div>
 
+<!-- ARTES -->
+<div id="artes" class="submenu">
 <div class="categoria">
-<h3>Substantivos</h3>
+<h3>Artes</h3>
 <div class="links">
-<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-próprio">Próprio</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-comum">Comum</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-coletivo">Coletivo</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-concreto">Concreto</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-abstrato">Abstrato</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-primitivo">Primitivo</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-derivado">Derivado</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-simples">Simples</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-composto">Composto</a>
+<a href="#">Instrumentos Musicais</a>
+<a href="#">Desenhe no Google</a>
+</div>
 </div>
 </div>
 
+<!-- GEOGRAFIA -->
+<div id="geografia" class="submenu">
 <div class="categoria">
-<h3>Classes de Palavras</h3>
+<h3>Geografia</h3>
 <div class="links">
-<a target="_blank" href="https://wordwall.net/pt-br/community/adjetivos">Adjetivo</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/verbos">Verbo</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/pronomes">Pronome</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/artigo-gramática">Artigo</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/advérbios">Advérbio</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/preposição">Preposição</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/conjunção">Conjunção</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/interjeição">Interjeição</a>
+<a href="#">Capitais do Brasil</a>
+<a href="#">Países da América Latina</a>
+<a href="#">Países da Oceania</a>
+</div>
 </div>
 </div>
 
+<!-- HISTÓRIA -->
+<div id="historia" class="submenu">
 <div class="categoria">
-<h3>Interpretação</h3>
+<h3>História</h3>
 <div class="links">
-<a target="_blank" href="https://wordwall.net/pt-br/community/interpretação-de-texto">Interpretação de Texto</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/gênero-textual">Gêneros Textuais</a>
-<a target="_blank" href="https://wordwall.net/pt-br/community/produção-textual">Produção Textual</a>
+<a href="#">Incas, Astecas e Maias</a>
+<a href="#">Expansão Marítima</a>
 </div>
 </div>
-
 </div>
 
 </section>
