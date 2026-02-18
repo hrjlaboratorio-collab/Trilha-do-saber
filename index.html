@@ -15,212 +15,208 @@ box-sizing:border-box;
 font-family:'Fredoka', sans-serif;
 }
 
-body{
-background:#f4f7fb;
-}
+body{ background:#f4f7fb; }
 
-/* CABEÇALHO */
+/* HEADER */
 header{
 background:#58cc02;
 color:white;
 text-align:center;
-padding:45px 20px;
-border-radius:0 0 30px 30px;
+padding:50px 20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
-section{
-padding:40px 8%;
-}
+h1{ font-size:2.8rem; }
 
-/* MENU DISCIPLINAS */
-.menu{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:20px;
-margin-bottom:40px;
-}
-
-.menu a{
-background:#ffd6b0;
-padding:18px 30px;
-border-radius:30px;
-text-decoration:none;
-color:#333;
-font-weight:600;
-transition:.3s;
-}
-
-.menu a:hover{
-transform:scale(1.08);
-}
-
-/* DISCIPLINAS */
-.disciplina{
-display:none;
-}
-
-.disciplina:target{
-display:block;
-}
+section{ padding:40px 8%; }
 
 h2{
-text-align:center;
 margin-bottom:30px;
+text-align:center;
+color:#333;
 }
 
-.categoria{
+/* BOTÕES DISCIPLINAS */
+.disciplinas{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
 margin-bottom:40px;
+}
+
+.botao{
+background:white;
+padding:30px;
+border-radius:20px;
+text-align:center;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 6px 15px rgba(0,0,0,0.08);
+font-size:1.2rem;
+font-weight:600;
+}
+
+.botao:hover{ transform:translateY(-6px); }
+
+.portugues{ border-top:8px solid #58cc02; }
+.matematica{ border-top:8px solid #ff9800; }
+.geografia{ border-top:8px solid #03a9f4; }
+.ciencias{ border-top:8px solid #9c27b0; }
+.historia{ border-top:8px solid #f44336; }
+
+/* SUBMENUS */
+.submenu{
+display:none;
+margin-top:30px;
+padding:30px;
+background:white;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.categoria{ margin-bottom:35px; }
+
+.categoria h3{
+margin-bottom:15px;
+color:#333;
 }
 
 .links{
 display:flex;
 flex-wrap:wrap;
-gap:15px;
+gap:12px;
 }
 
 .links a{
+padding:14px 20px;
 background:#e5f7d4;
-padding:15px 22px;
-border-radius:20px;
-text-decoration:none;
 color:#333;
-font-weight:600;
-transition:.3s;
-}
-
-.links a:hover{
-transform:scale(1.08);
-}
-
-.voltar{
-margin-top:40px;
-text-align:center;
-}
-
-.voltar a{
 text-decoration:none;
+border-radius:15px;
 font-weight:600;
-color:#58cc02;
+transition:0.3s;
+}
+
+.links a:hover{ transform:scale(1.05); }
+
+footer{
+text-align:center;
+padding:30px;
+color:#666;
 }
 </style>
+
+<script>
+function abrir(id){
+document.querySelectorAll('.submenu').forEach(el => el.style.display='none');
+document.getElementById(id).style.display='block';
+}
+</script>
 </head>
 
 <body>
 
 <header>
 <h1>🎓 Trilha do Saber</h1>
-<p>Escolha uma disciplina</p>
+<p>Aprender brincando é muito mais divertido!</p>
 </header>
 
 <section>
 
-<!-- MENU -->
-<div class="menu">
-<a href="#portugues">Português</a>
-<a href="#matematica">Matemática</a>
-<a href="#ciencias">Ciências</a>
-<a href="#artes">Artes</a>
-<a href="#geografia">Geografia</a>
-<a href="#historia">História</a>
+<h2>Escolha sua disciplina 👇</h2>
+
+<div class="disciplinas">
+<div class="botao portugues" onclick="abrir('portugues')">📖 Português</div>
+<div class="botao matematica" onclick="abrir('matematica')">➕ Matemática</div>
+<div class="botao geografia" onclick="abrir('geografia')">🌎 Geografia</div>
+<div class="botao ciencias" onclick="abrir('ciencias')">🧪 Ciências</div>
+<div class="botao historia" onclick="abrir('historia')">📚 História</div>
 </div>
 
 <!-- ================= PORTUGUÊS ================= -->
-<div id="portugues" class="disciplina">
-
-<h2>Português</h2>
+<div id="portugues" class="submenu">
 
 <div class="categoria">
 <h3>Famílias Silábicas</h3>
 <div class="links">
-<a href="COLE_AQUI_O_LINK_WORDWALL">BA-BE-BI-BO-BU</a>
-<a href="COLE_AQUI_O_LINK_WORDWALL">PA-PE-PI-PO-PU</a>
-<a href="COLE_AQUI_O_LINK_WORDWALL">CA-CO-CU</a>
-<a href="COLE_AQUI_O_LINK_WORDWALL">CE-CI</a>
-<a href="COLE_AQUI_O_LINK_WORDWALL">QUA-QUE-QUI-QUO</a>
-<a href="COLE_AQUI_O_LINK_WORDWALL">DA-DE-DI-DO-DU</a>
-<a href="COLE_AQUI_O_LINK_WORDWALL">RA-RE-RI-RO-RU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-b">BA-BE-BI-BO-BU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-p">PA-PE-PI-PO-PU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-c">CA-CO-CU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-c">CE-CI</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-qu">QUA-QUE-QUI-QUO</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-d">DA-DE-DI-DO-DU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-r">RA-RE-RI-RO-RU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-f">FA-FE-FI-FO-FU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-s">SA-SE-SI-SO-SU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-g">GA-GO-GU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-g">GE-GI-GUE-GUI</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-t">TA-TE-TI-TO-TU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-j">JA-JE-JI-JO-JU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-v">VA-VE-VI-VO-VU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-l">LA-LE-LI-LO-LU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-x">XA-XE-XI-XO-XU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-m">MA-ME-MI-MO-MU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-z">ZA-ZE-ZI-ZO-ZU</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/família-silábica-n">NA-NE-NI-NO-NU</a>
 </div>
 </div>
 
 <div class="categoria">
 <h3>Sílabas Complexas</h3>
 <div class="links">
-<a href="COLE_AQUI_O_LINK_WORDWALL">BR / BL</a>
-<a href="COLE_AQUI_O_LINK_WORDWALL">CR / CL</a>
-<a href="COLE_AQUI_O_LINK_WORDWALL">FR / FL</a>
-<a href="COLE_AQUI_O_LINK_WORDWALL">PR / PL</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/br-bl">BR / BL</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/cr-cl">CR / CL</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/fr-fl">FR / FL</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/pr-pl">PR / PL</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/tr">TR</a>
 </div>
 </div>
 
-<div class="voltar">
-<a href="#">⬅ Voltar ao menu</a>
-</div>
-</div>
-
-<!-- ================= MATEMÁTICA ================= -->
-<div id="matematica" class="disciplina">
-<h2>Matemática</h2>
+<div class="categoria">
+<h3>Substantivos</h3>
 <div class="links">
-<a href="#">Sequência Numérica</a>
-<a href="#">Tabuada</a>
-<a href="#">Ábaco</a>
-<a href="#">Divisão</a>
-<a href="#">Sistema Monetário</a>
-<a href="#">Probleminhas 3º ano</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-próprio">Próprio</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-comum">Comum</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-coletivo">Coletivo</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-concreto">Concreto</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-abstrato">Abstrato</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-primitivo">Primitivo</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-derivado">Derivado</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-simples">Simples</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/substantivo-composto">Composto</a>
 </div>
-<div class="voltar"><a href="#">⬅ Voltar ao menu</a></div>
-</div>
-
-<!-- ================= CIÊNCIAS ================= -->
-<div id="ciencias" class="disciplina">
-<h2>Ciências</h2>
-<div class="links">
-<a href="#">Corpo Humano</a>
-<a href="#">Partes do Corpo Humano</a>
-<a href="#">Carnívoros, Herbívoros e Onívoros</a>
-<a href="#">O Planeta Terra</a>
-</div>
-<div class="voltar"><a href="#">⬅ Voltar ao menu</a></div>
 </div>
 
-<!-- ================= ARTES ================= -->
-<div id="artes" class="disciplina">
-<h2>Artes</h2>
+<div class="categoria">
+<h3>Classes de Palavras</h3>
 <div class="links">
-<a href="#">Instrumentos Musicais</a>
-<a href="#">Atividades</a>
-<a href="#">Atividades 1º ano</a>
-<a href="#">Desenhe no Google</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/adjetivos">Adjetivo</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/verbos">Verbo</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/pronomes">Pronome</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/artigo-gramática">Artigo</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/advérbios">Advérbio</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/preposição">Preposição</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/conjunção">Conjunção</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/interjeição">Interjeição</a>
 </div>
-<div class="voltar"><a href="#">⬅ Voltar ao menu</a></div>
 </div>
 
-<!-- ================= GEOGRAFIA ================= -->
-<div id="geografia" class="disciplina">
-<h2>Geografia</h2>
+<div class="categoria">
+<h3>Interpretação</h3>
 <div class="links">
-<a href="#">Capitais do Brasil</a>
-<a href="#">Países da América Latina</a>
-<a href="#">Países da Oceania</a>
-<a href="#">Estados Norte-Americanos</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/interpretação-de-texto">Interpretação de Texto</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/gênero-textual">Gêneros Textuais</a>
+<a target="_blank" href="https://wordwall.net/pt-br/community/produção-textual">Produção Textual</a>
 </div>
-<div class="voltar"><a href="#">⬅ Voltar ao menu</a></div>
 </div>
 
-<!-- ================= HISTÓRIA ================= -->
-<div id="historia" class="disciplina">
-<h2>História</h2>
-<div class="links">
-<a href="#">Rotas do Deserto</a>
-<a href="#">Mapa das Especiarias</a>
-<a href="#">Incas, Astecas e Maias</a>
-<a href="#">Expansão Marítima</a>
-</div>
-<div class="voltar"><a href="#">⬅ Voltar ao menu</a></div>
 </div>
 
 </section>
+
+<footer>
+© 2026 - Trilha do Saber
+</footer>
 
 </body>
 </html>
