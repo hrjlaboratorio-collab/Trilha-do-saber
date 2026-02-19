@@ -1,0 +1,81 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Fredoka', sans-serif;
+}
+
+body{ background:#f4f7fb; }
+
+/* HEADER */
+header{
+background:#58cc02;
+color:white;
+text-align:center;
+padding:50px 20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1{ font-size:2.8rem; }
+
+section{ padding:40px 8%; }
+
+h2{
+margin-bottom:30px;
+text-align:center;
+color:#333;
+}
+
+.disciplinas{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+margin-bottom:40px;
+}
+
+.botao{
+display:block;
+background:white;
+padding:30px;
+border-radius:20px;
+text-align:center;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 6px 15px rgba(0,0,0,0.08);
+font-size:1.2rem;
+font-weight:600;
+text-decoration:none;
+color:#333;
+}
+
+.botao:hover{ transform:translateY(-6px); }
+
+.portugues{ border-top:8px solid #58cc02; }
+.matematica{ border-top:8px solid #ff9800; }
+.geografia{ border-top:8px solid #03a9f4; }
+.ciencias{ border-top:8px solid #9c27b0; }
+.historia{ border-top:8px solid #f44336; }
+
+.links{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.links a{
+padding:14px 20px;
+background:#e5f7d4;
+color:#333;
+text-decoration:none;
+border-radius:15px;
+font-weight:600;
+transition:0.3s;
+}
+
+.links a:hover{ transform:scale(1.05); }
+
+footer{
+text-align:center;
+padding:30px;
+color:#666;
+}
