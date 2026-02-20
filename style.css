@@ -1,81 +1,200 @@
+/* =======================================================
+   RESET GERAL
+   Remove margens padrão e define fonte principal
+======================================================= */
+
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Fredoka', sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Fredoka', sans-serif;
 }
 
-body{ background:#f4f7fb; }
+body{
+    background:#f4f7fb;
+}
 
-/* HEADER */
+
+/* =======================================================
+   HEADER (TOPO DA PÁGINA)
+======================================================= */
+
 header{
-background:#58cc02;
-color:white;
-text-align:center;
-padding:50px 20px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    background:#58cc02; /* verde Duolingo */
+    color:white;
+    text-align:center;
+    padding:60px 20px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.15);
 }
 
-h1{ font-size:2.8rem; }
+header h1{
+    font-size:3rem;
+    font-weight:900;
+    letter-spacing:1px;
+    margin-bottom:10px;
+}
 
-section{ padding:40px 8%; }
+header p{
+    font-size:1.1rem;
+    opacity:0.95;
+}
+
+
+/* =======================================================
+   SEÇÕES GERAIS
+======================================================= */
+
+section{
+    padding:40px 8%;
+}
 
 h2{
-margin-bottom:30px;
-text-align:center;
-color:#333;
+    margin-bottom:30px;
+    text-align:center;
+    color:#333;
 }
 
+
+/* =======================================================
+   GRID DAS DISCIPLINAS (PÁGINA INICIAL)
+======================================================= */
+
 .disciplinas{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:25px;
-margin-bottom:40px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+    margin-bottom:40px;
 }
 
 .botao{
-display:block;
-background:white;
-padding:30px;
-border-radius:20px;
-text-align:center;
-cursor:pointer;
-transition:0.3s;
-box-shadow:0 6px 15px rgba(0,0,0,0.08);
-font-size:1.2rem;
-font-weight:600;
-text-decoration:none;
-color:#333;
+    display:block;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 6px 15px rgba(0,0,0,0.08);
+    font-size:1.2rem;
+    font-weight:600;
+    text-decoration:none;
+    color:#333;
 }
 
-.botao:hover{ transform:translateY(-6px); }
+.botao:hover{
+    transform:translateY(-6px);
+}
+
+
+/* =======================================================
+   FAIXA COLORIDA SUPERIOR DOS BOTÕES (PÁGINA INICIAL)
+======================================================= */
 
 .portugues{ border-top:8px solid #58cc02; }
 .matematica{ border-top:8px solid #ff9800; }
 .geografia{ border-top:8px solid #03a9f4; }
 .ciencias{ border-top:8px solid #9c27b0; }
 .historia{ border-top:8px solid #f44336; }
+.arte{ border-top:8px solid #e91e63; }
+
+
+/* =======================================================
+   LINKS INTERNOS DAS DISCIPLINAS
+======================================================= */
 
 .links{
-display:flex;
-flex-wrap:wrap;
-gap:12px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
 }
 
 .links a{
-padding:14px 20px;
-background:#e5f7d4;
-color:#333;
-text-decoration:none;
-border-radius:15px;
-font-weight:600;
-transition:0.3s;
+    padding:14px 20px;
+    color:white;
+    text-decoration:none;
+    border-radius:15px;
+    font-weight:600;
+    transition:0.3s;
 }
 
-.links a:hover{ transform:scale(1.05); }
+
+/* =======================================================
+   CORES AUTOMÁTICAS POR DISCIPLINA
+   (funciona com <body class="nome-da-disciplina">)
+======================================================= */
+
+
+/* ---------- COR DO HEADER ---------- */
+
+body.portugues header{ background:#58cc02; color:white; }
+body.matematica header{ background:#ff9800; color:white; }
+body.geografia header{ background:#03a9f4; color:white; }
+body.ciencias header{ background:#9c27b0; color:white; }
+body.historia header{ background:#f44336; color:white; }
+body.arte header{ background:#e91e63; color:white; }
+
+
+/* ---------- COR DOS BOTÕES INTERNOS ---------- */
+
+body.portugues .links a{ background:#58cc02; }
+body.portugues .links a:hover{ background:#46a302; }
+
+body.matematica .links a{ background:#ff9800; }
+body.matematica .links a:hover{ background:#e68900; }
+
+body.geografia .links a{ background:#03a9f4; }
+body.geografia .links a:hover{ background:#0288d1; }
+
+body.ciencias .links a{ background:#9c27b0; }
+body.ciencias .links a:hover{ background:#7b1fa2; }
+
+body.historia .links a{ background:#f44336; }
+body.historia .links a:hover{ background:#d32f2f; }
+
+body.arte .links a{ background:#e91e63; }
+body.arte .links a:hover{ background:#c2185b; }
+
+
+/* =======================================================
+   FERRAMENTAS INTERATIVAS (CARDS)
+======================================================= */
+
+.ferramentas{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    text-align:center;
+    width:130px;
+    text-decoration:none;
+    color:#333;
+    box-shadow:0 6px 15px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+}
+
+.card img{
+    width:60px;
+    margin-bottom:10px;
+}
+
+
+/* =======================================================
+   FOOTER
+======================================================= */
 
 footer{
-text-align:center;
-padding:30px;
-color:#666;
+    text-align:center;
+    padding:30px;
+    color:#666;
 }
