@@ -164,7 +164,9 @@ body.arte .links a:hover{ background:#c2185b; }
     justify-content:center;
     gap:40px;
     margin-top:20px;
+    margin-bottom:60px; /* aumenta espaço abaixo */
     flex-wrap:wrap;
+    
 }
 
 .card{
@@ -186,6 +188,57 @@ body.arte .links a:hover{ background:#c2185b; }
 .card img{
     width:60px;
     margin-bottom:10px;
+}
+
+
+/* =======================================================
+   RECURSOS EDUCACIONAIS DIGITAIS (CARDS)
+   Mesma lógica visual das Ferramentas, porém
+   com espaçamento maior para separar as seções
+======================================================= */
+
+.recursos{
+    display:flex;
+    justify-content:center;      /* centraliza os cards */
+    gap:40px;                    /* espaço entre os cards */
+    margin-top:40px;             /* espaço acima da seção */
+    margin-bottom:60px;          /* espaço abaixo da seção */
+    flex-wrap:wrap;              /* quebra linha no mobile */
+}
+
+/* Card dos Recursos (herda padrão visual) */
+.recursos .card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    width:160px;                 /* levemente maior que ferramentas */
+    height:170px;                /* deixa formato mais quadrado */
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    color:#333;
+    box-shadow:0 6px 15px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+/* Efeito hover */
+.recursos .card:hover{
+    transform:translateY(-6px);
+}
+
+/* Imagem dentro do card */
+.recursos .card img{
+    width:65px;
+    margin-bottom:12px;
+}
+
+/* Texto do card */
+.recursos .card p{
+    font-weight:600;
+    font-size:1rem;
 }
 
 
