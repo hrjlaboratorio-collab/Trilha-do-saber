@@ -90,12 +90,13 @@ h2{
    FAIXA COLORIDA SUPERIOR DOS BOTÕES (PÁGINA INICIAL)
 ======================================================= */
 
-.portugues{ border-top:8px solid #58cc02; }
-.matematica{ border-top:8px solid #ff9800; }
-.geografia{ border-top:8px solid #03a9f4; }
-.ciencias{ border-top:8px solid #9c27b0; }
-.historia{ border-top:8px solid #f44336; }
-.arte{ border-top:8px solid #e91e63; }
+.portugues{ border-top:8px solid #58cc02; }/* Azul Português */
+.matematica{ border-top:8px solid #ff9800; }/* Azul Matemática */
+.geografia{ border-top:8px solid #03a9f4; }/* Azul Geografia */
+.ciencias{ border-top:8px solid #9c27b0; }/* Azul Ciências */
+.historia{ border-top:8px solid #f44336; }/* Azul História */
+.arte{ border-top:8px solid #e91e63; }/* Azul Arte */
+.ingles{ border-top:8px solid #2962ff; } /* Azul Inglês */
 
 
 /* =======================================================
@@ -132,7 +133,7 @@ body.geografia header{ background:#03a9f4; color:white; }
 body.ciencias header{ background:#9c27b0; color:white; }
 body.historia header{ background:#f44336; color:white; }
 body.arte header{ background:#e91e63; color:white; }
-
+body.ingles header{ background:#2962ff; color:white; }
 
 /* ---------- COR DOS BOTÕES INTERNOS ---------- */
 
@@ -153,6 +154,9 @@ body.historia .links a:hover{ background:#d32f2f; }
 
 body.arte .links a{ background:#e91e63; }
 body.arte .links a:hover{ background:#c2185b; }
+
+body.ingles .links a{ background:#2962ff; }
+body.ingles .links a:hover{ background:#0039cb; }
 
 
 /* =======================================================
