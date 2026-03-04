@@ -110,19 +110,41 @@ h2{
 
 .links{
     display:flex;
-    flex-wrap:wrap;
+    flex-direction:column;
     gap:12px;
 }
 
 .links a{
-    padding:14px 20px;
-    color:white;
-    text-decoration:none;
+    background:#00c6ff;
+    padding:10px 14px;
     border-radius:15px;
-    font-weight:600;
+    text-decoration:none;
     transition:0.3s;
+    display:block;
 }
 
+
+.links a small{
+    font-weight:400;
+    font-size:0.8rem;
+    display:block;
+}
+
+
+.titulo-link{
+    display:block;
+    font-weight:700;
+    font-size:0.95rem;
+    margin-bottom:3px;
+    color:#003c8f;
+}
+
+.descricao-link{
+    display:block;
+    font-size:0.75rem;
+    opacity:0.9;
+    color:white;
+}
 
 /* =======================================================
    CORES AUTOMÁTICAS POR DISCIPLINA
@@ -189,40 +211,58 @@ body.tecnologia .links a:hover{
     flex-wrap:wrap;
 }
 
-/* CARD PADRÃO (AGORA SEM FUNDO E SEM SOMBRA) */
-
-.card{
-    background:white;
-    padding:20px;
-    border-radius:20px;
-    text-align:center;
-    width:180px;
-    text-decoration:none;
-    color:#333;
-    transition:0.3s ease;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    box-shadow:0 6px 15px rgba(0,0,0,0.06);
+/* =======================================================
+   CARD MODERNO (combinando os dois estilos)
+======================================================= */
+.card {
+    background: rgba(255, 255, 255, 0.08); /* fundo semi-transparente */
+    backdrop-filter: blur(10px);          /* desfoque do fundo atrás do card */
+    border-radius: 25px;                  /* cantos arredondados */
+    padding: 30px;                         /* espaço interno do card */
+    text-align: center;                     /* centraliza texto e conteúdo */
+    transition: 0.3s;                       /* animação suave em hover */
+    border: 1px solid rgba(255,255,255,0.1); /* borda leve transparente */
+    display: flex;                          /* flexbox para organizar conteúdo verticalmente */
+    flex-direction: column;                 /* itens do card em coluna */
+    align-items: center;                    /* centraliza horizontalmente os itens */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.06); /* sombra sutil para profundidade */
 }
 
-/* Efeito mais moderno */
-.card:hover{
-    transform:scale(1.08);
+/* =======================================================
+   EFEITO HOVER DO CARD
+======================================================= */
+.card:hover {
+    transform: translateY(-10px) scale(1.02); /* levanta e aumenta levemente */
+    background: rgba(255,255,255,0.15);       /* aumenta opacidade do fundo ao passar o mouse */
 }
 
-/* Imagens maiores */
-.card img{
-    width:100px;
-    margin-bottom:15px;
+/* =======================================================
+   ÍCONE DO CARD (usando <span>)
+======================================================= */
+.card span { 
+    font-size: 3rem;    /* tamanho grande do ícone */
+    display: block;     /* transforma em bloco para ocupar linha inteira */
+    margin-bottom: 15px; /* espaço entre ícone e título */
 }
 
-/* Texto abaixo da imagem */
-.card p{
-    font-weight:600;
-    font-size:1rem;
-    text-align:center;
+/* =======================================================
+   IMAGENS DENTRO DO CARD (opcional, se houver <img>)
+======================================================= */
+.card img {
+    width: 100px;       /* largura fixa da imagem */
+    margin-bottom: 15px; /* espaço entre imagem e título */
 }
+
+/* =======================================================
+   TÍTULO DO CARD (<h3>)
+======================================================= */
+.card h3 {
+    margin-bottom: 10px; /* espaço entre título e links */
+    font-size: 1.2rem;   /* tamanho do texto do título */
+    font-weight: 600;    /* negrito leve para destaque */
+}
+
+
 
 
 /* =======================================================
@@ -251,3 +291,23 @@ footer{
 }
 
 
+/* =======================================================
+   AJUSTES PARA CELULAR
+======================================================= */
+
+@media (max-width:600px){
+
+    header h1{
+        font-size:2rem;
+    }
+
+    section{
+        padding:30px 5%;
+    }
+
+    .botao{
+        padding:20px;
+        font-size:1rem;
+    }
+
+}
