@@ -169,6 +169,57 @@ body.tecnologia header{
 
 /* ---------- COR DOS BOTÕES INTERNOS ---------- */
 
+/* =======================================================
+   CORES POR SEÇÃO (DENTRO DA MATEMÁTICA)
+======================================================= */
+
+/* JOGOS E ATIVIDADES */
+body.matematica .categoria.jogos {
+    border-top: 8px solid #ff9800;
+}
+
+body.matematica .categoria.jogos .links a {
+    background: #ff9800;
+}
+
+body.matematica .categoria.jogos .links a:hover {
+    background: #e68900;
+}
+
+
+/* TABUADA */
+body.matematica .categoria.tabuada {
+    border-top: 8px solid #4caf50;
+}
+
+body.matematica .categoria.tabuada .links a {
+    background: #4caf50;
+}
+
+body.matematica .categoria.tabuada .links a:hover {
+    background: #3d8b40;
+}
+
+
+/* SEQUÊNCIA NUMÉRICA */
+body.matematica .categoria.sequencia {
+    border-top: 8px solid #2196f3;
+}
+
+body.matematica .categoria.sequencia .links a {
+    background: #2196f3;
+}
+
+body.matematica .categoria.sequencia .links a:hover {
+    background: #1976d2;
+}
+
+
+/* TÍTULOS COLORIDOS (opcional, mas recomendado) */
+body.matematica .categoria.jogos h3 { color: #ff9800; }
+body.matematica .categoria.tabuada h3 { color: #4caf50; }
+body.matematica .categoria.sequencia h3 { color: #2196f3; }
+
 body.portugues .links a{ background:#58cc02; }
 body.portugues .links a:hover{ background:#46a302; }
 
