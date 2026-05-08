@@ -330,6 +330,33 @@ body.tecnologia .links a:hover{
     flex-wrap:wrap;
 }
 
+/* =======================================================
+   ÁREA DE DOWNLOAD DE IMAGENS
+======================================================= */
+
+.downloads{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+    margin-top:30px;
+}
+
+.downloads a{
+    transition:0.3s;
+}
+
+.downloads img{
+    width:300px;
+    border-radius:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    transition:0.3s;
+}
+
+.downloads img:hover{
+    transform:scale(1.05);
+    box-shadow:0 12px 25px rgba(0,0,0,0.25);
+}
 
 /* =======================================================
    FOOTER
@@ -340,6 +367,7 @@ footer{
     padding:30px;
     color:#666;
 }
+
 
 
 /* =======================================================
