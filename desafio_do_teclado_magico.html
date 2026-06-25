@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Desafio do Teclado Mágico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos customizados para acessibilidade cognitiva */
+        .font-friendly {
+            font-family: 'Lexend', 'Inter', sans-serif;
+        }
+        
+        .dyslexia-font {
+            font-family: sans-serif !important;
+            letter-spacing: 0.15em !important;
+            word-spacing: 0.3em !important;
+            line-height: 1.8 !important;
+        }
+
+        /* Foco acessível bem destacado */
+        button:focus, a:focus {
+            outline: 4px solid #3b82f6;
+            outline-offset: 4px;
+        }
+
+        /* Animação de sacudida para erros sutil */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        /* Transições suaves gerais */
+        .transition-all-300 {
+            transition: all 0.3s ease;
+        }
+
+        /* Efeito de tecla 3D */
+        .key-3d {
+            box-shadow: 0 8px 0 #cbd5e1, 0 12px 15px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+            transition: all 0.1s ease;
+        }
+        .key-3d:active {
+            box-shadow: 0 2px 0 #cbd5e1, 0 4px 6px rgba(0,0,0,0.1);
+            transform: translateY(2px);
+        }
+        /* Ajuste do contraste no tema escuro */
+        .dark-mode .key-3d {
+            box-shadow: 0 8px 0 #334155, 0 12px 15px rgba(0,0,0,0.5);
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-friendly min-h-screen flex flex-col justify-between transition-all-300">
+
+    <header class="bg-white border-b border-slate-200 p-4 shadow-sm">
+        <div class="max-w-4xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl" aria-hidden="true">⌨️</span>
+                <h1 class="text-lg font-bold text-slate-700">Teclado Mágico <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full font-semibold">DUA Acessível</span></h1>
+            </div>
+            
+            <!-- Painel de Acessibilidade -->
+            <div class="flex flex-wrap items-center gap-2" aria-label="Opções de Acessibilidade">
+                <!-- Narração de Tela (Leitor Interno) -->
+                <button onclick="toggleAudioReading()" id="tts-toggle" class="bg-slate-100 hover:bg-indigo-100 text-slate-700 hover:text-indigo-800 px-3 py-2 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition-all-300" title="Ler instruções em voz alta">
+                    <span id="speaker-icon">🔊</span> Ouvir Tela
+                </button>
+
+                <!-- Fonte para Dislexia -->
+                <button onclick="toggleDyslexiaFont()" class="bg-slate-100 hover:bg-indigo-100 text-slate-700 hover:text-indigo-800 px-3 py-2 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition-all-300" title="Mudar estilo de letra">
+                    <span>🔤</span> Letra Fácil
+                </button>
+
+                <!-- Alto Contraste -->
+                <button onclick="toggleContrast()" class="bg-slate-100 hover:bg-indigo-100 text-slate-700 hover:text-indigo-800 px-3 py-2 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition-all-300" title="Mudar cores da tela">
+                    <span>🌗</span> Contraste
+                </button>
+
+                <!-- Tamanho da Fonte -->
+                <div class="flex items-center bg-slate-100 rounded-lg p-1">
+                    <button onclick="changeFontSize(-2)" class="px-2 py-1 hover:bg-slate-200 rounded text-xs font-bold" title="Diminuir tamanho da letra">A-</button>
+                    <span class="px-2 text-xs font-bold">Letra</span>
+                    <button onclick="changeFontSize(2)" class="px-2 py-1 hover:bg-slate-200 rounded text-xs font-bold" title="Aumentar tamanho da letra">A+</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl w-full mx-auto p-4 flex-grow flex flex-col justify-center gap-4">
+        
+        <!-- Progresso do Desafio -->
+        <div id="progress-container" class="mb-4 hidden">
+            <div class="flex justify-between items-center mb-2">
+                <span id="level-title" class="text-sm font-bold text-indigo-600 uppercase tracking-wider">Desafio 1 de 7</span>
+                <span id="level-badge" class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full">Nível 1: Teclas Básicas</span>
+            </div>
+            <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-emerald-500 h-full transition-all-300" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Cartão do Jogo Principal (Tela Dinâmica) -->
+        <div id="game-card" class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-slate-100 transition-all-300 min-h-[450px] flex flex-col justify-between relative overflow-hidden">
+            
+            <!-- Tela de Introdução -->
+            <div id="intro-screen" class="text-center py-4 flex flex-col items-center gap-6">
+                <!-- Foto Real do Estudante com Laptop (Slide 1 do arquivo O Desafio do Teclado Mágico.pptx) -->
+                <div class="w-48 h-32 rounded-2xl overflow-hidden shadow-md border-4 border-white ring-4 ring-indigo-100 transition-all-300 relative bg-slate-100">
+                    <img src="https://img.freepik.com/premium-photo/little-boy-pupil-with-happy-face-expression-near-laptop-school-concept-kid-with-notebook-closeup-portrait-clever-child-boy-pupil-with-laptop-child-from-elementary-school_265223-169091.jpg?w=360" 
+                         alt="Criança feliz usando um notebook na escola" 
+                         class="w-full h-full object-cover"
+                         onerror="this.style.display='none'; document.getElementById('emoji-fallback').style.display='flex';">
+                    <div id="emoji-fallback" class="hidden absolute inset-0 items-center justify-center text-5xl bg-indigo-50">💻</div>
+                </div>
+                
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-indigo-900 mb-3">O Desafio do Teclado Mágico</h2>
+                    <p class="text-lg text-slate-600 max-w-lg mx-auto">
+                        Aprenda a usar o teclado do computador brincando com as teclas! Encontre as teclas certas para vencer.
+                    </p>
+                </div>
+
+                <!-- Card de Instruções Rápidas -->
+                <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 text-left max-w-md w-full">
+                    <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2">⭐ Como Jogar:</h3>
+                    <ul class="text-sm text-indigo-800 space-y-2">
+                        <li>1. O jogo vai pedir para você achar uma tecla importante.</li>
+                        <li>2. Olhe para o seu <strong>teclado físico</strong> do computador para achar.</li>
+                        <li>3. Veja o desenho da tecla na tela se precisar de ajuda!</li>
+                        <li>4. Depois, aperte a **tecla real no seu teclado** ou clique na resposta certa!</li>
+                    </ul>
+                </div>
+
+                <button onclick="startGame()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xl px-8 py-4 rounded-xl shadow-lg hover:shadow-indigo-200 transition-all-300 transform hover:-translate-y-1 w-full max-w-xs">
+                    Começar Desafio 🚀
+                </button>
+            </div>
+
+            <div id="level-screen" class="hidden flex-grow flex flex-col justify-between gap-6">
+                <!-- Cabeçalho da Etapa / Pergunta -->
+                <div class="text-center">
+                    <div class="flex justify-between items-center max-w-2xl mx-auto gap-4">
+                        <span id="challenge-number" class="text-xs bg-indigo-100 text-indigo-800 font-extrabold px-3 py-1.5 rounded-full uppercase">DESAFIO</span>
+                        
+                        <!-- Botão para abrir o Mapa do Teclado Pedagógico -->
+                        <button onclick="toggleKeyboardMap(true)" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-900 font-extrabold px-3 py-1.5 rounded-full uppercase flex items-center gap-1 shadow-sm transition-all-300">
+                            🎨 Ver Teclado Colorido
+                        </button>
+                    </div>
+                    <h3 id="challenge-title" class="text-2xl md:text-3xl font-extrabold text-indigo-900 mt-3">Nome do Desafio</h3>
+                    
+                    <!-- Box de Dica com Altíssima Legibilidade -->
+                    <div class="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl max-w-2xl mx-auto flex items-start gap-3">
+                        <span class="text-2xl" aria-hidden="true">💡</span>
+                        <div class="text-left">
+                            <span class="text-xs font-extrabold text-amber-800 block uppercase">Super Dica:</span>
+                            <p id="challenge-tip" class="text-amber-900 text-base font-semibold">Texto da super dica...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pergunta e Representação Visual da Tecla Requisitada -->
+                <div class="flex flex-col items-center justify-center gap-4 my-2">
+                    <p id="challenge-question" class="text-xl md:text-2xl font-bold text-slate-700">Qual é a tecla...</p>
+                    
+                    <!-- Container da Ilustração Dinâmica da Tecla (Injetado via JS) -->
+                    <div id="key-visual-container" class="w-full flex justify-center items-center h-28" aria-hidden="true">
+                        <!-- Gerado dinamicamente com SVGs de alta definição -->
+                    </div>
+                </div>
+
+                <!-- Opções de Resposta Visual / Grandes Alvos de Clique -->
+                <div id="options-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto w-full">
+                    <!-- Gerado dinamicamente -->
+                </div>
+
+                <!-- Zona de Feedback Visual e Sonoro Integrado -->
+                <div id="feedback-area" class="h-12 flex items-center justify-center font-bold text-lg rounded-xl transition-all-300">
+                    <!-- Mensagens de erro/acerto temporárias -->
+                </div>
+            </div>
+
+            <!-- Tela de Vitória Final (Slide 11 do arquivo O Desafio do Teclado Mágico.pptx) -->
+            <div id="victory-screen" class="hidden text-center py-4 flex flex-col items-center gap-6">
+                <!-- Imagem do Troféu Real dos Vencedores -->
+                <div class="w-48 h-48 rounded-2xl overflow-hidden shadow-md border-4 border-white ring-4 ring-emerald-100 relative bg-white flex items-center justify-center">
+                    <img src="https://media.istockphoto.com/id/831638836/vector/winners-kids-boy-girl-holding-champion-golden-cup.jpg?s=612x612&w=0&k=20&c=HmgTLWiQLu1LXwVC3FcFsVDYmBDbp6TSdwLdh_Hyd3Q=" 
+                         alt="Crianças segurando um grande troféu dourado juntas" 
+                         class="w-full h-full object-contain p-2"
+                         onerror="this.style.display='none'; document.getElementById('trophy-fallback').style.display='flex';">
+                    <div id="trophy-fallback" class="hidden absolute inset-0 items-center justify-center text-7xl bg-emerald-50">🏆</div>
+                </div>
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-emerald-600 mb-2">🎉 VOCÊ VENCEU! 🎉</h2>
+                    <p class="text-2xl font-bold text-indigo-900 mb-2">Você agora é um Mestre Digital do Teclado!</p>
+                    <p class="text-lg text-slate-600 max-w-md mx-auto">
+                        Incrível! Você explorou todas as teclas físicas do computador e aprendeu a função de cada uma delas com sucesso.
+                    </p>
+                </div>
+
+                <button onclick="restartGame()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl px-8 py-4 rounded-xl shadow-lg hover:shadow-emerald-200 transition-all-300 transform hover:-translate-y-1 w-full max-w-xs">
+                    Jogar de Novo 🔄
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal com Mapa do Teclado Colorido Pedagógico (Slide 12 do PowerPoint O Desafio do Teclado Mágico.pptx) -->
+    <div id="keyboard-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden" onclick="toggleKeyboardMap(false)">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="toggleKeyboardMap(false)" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl font-bold" title="Fechar">&times;</button>
+            
+            <h4 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">🎨 Teclado Pedagógico de Cores</h4>
+            <p class="text-xs text-slate-500 mb-4">Use este mapa colorido para ajudar você a encontrar onde as teclas ficam!</p>
+            
+            <!-- Imagem Real do Teclado Colorido -->
+            <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 relative min-h-[200px] flex items-center justify-center shadow-inner">
+                <img src="https://logickeyboard.com/images/LKB-LBHS-BJPU-US%201-p.webp" 
+                     alt="Mapa colorido do teclado com blocos de cores para cada tipo de tecla" 
+                     class="w-full h-auto max-h-[300px] object-contain"
+                     onerror="this.src='https://placehold.co/600x300/4f46e5/ffffff?text=Teclado+Colorido+LogicKeyboard';">
+            </div>
+            
+            <div class="mt-4 flex justify-between items-center">
+                <span class="text-xs text-slate-400">Origem: logickeyboard.com</span>
+                <button onclick="toggleKeyboardMap(false)" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-4 py-2 rounded-lg transition-all-300 shadow">
+                    Entendi, Voltar ao Jogo!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-100 border-t border-slate-200 p-4 text-center text-sm text-slate-500">
+        <p>Desenvolvido com carinho pelo <strong>Arquiteto de Soluções Educacionais DUA</strong>.</p>
+        <p class="text-xs mt-1">Conceitos pedagógicos alinhados com a Base Nacional Comum Curricular (BNCC).</p>
+    </footer>
+
+    <script>
+        // Banco de Dados das Perguntas com representações visuais em SVG customizado
+        const gameLevels = [
+            {
+                title: "O Respiro do Gigante",
+                tip: "Ela serve para dar um espaço em branco entre as palavras que escrevemos!",
+                question: "Qual destas é a BARRA DE ESPAÇO?",
+                options: [
+                    { text: "Tecla Curta", correct: false },
+                    { text: "A Maior de Todas!", correct: true },
+                    { text: "Tecla de Pular", correct: false }
+                ],
+                physicalKey: " ",
+                feedbackKeyName: "Barra de Espaço",
+                // SVG da Barra de Espaço
+                svgMarkup: `
+                    <div class="flex flex-col items-center">
+                        <svg class="w-64 h-16" viewBox="0 0 250 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="5" y="5" width="240" height="42" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="4" />
+                            <rect x="5" y="43" width="240" height="12" rx="4" fill="#cbd5e1" />
+                            <text x="125" y="32" font-family="'Lexend', sans-serif" font-size="14" font-weight="bold" fill="#475569" text-anchor="middle">ESPAÇO</text>
+                        </svg>
+                        <span class="text-xs text-indigo-500 font-extrabold mt-1">Super Dica: É a tecla mais comprida do teclado!</span>
+                    </div>
+                `
+            },
+            {
+                title: "O Elevador do Texto",
+                tip: "Ela faz o seu cursor descer para a próxima linha, como um elevador descendo!",
+                question: "Qual tecla faz o cursor pular de linha?",
+                options: [
+                    { text: "Apagar", correct: false },
+                    { text: "O Elevador (Enter)", correct: true },
+                    { text: "Controle", correct: false }
+                ],
+                physicalKey: "Enter",
+                feedbackKeyName: "Enter",
+                // SVG do Enter
+                svgMarkup: `
+                    <div class="flex flex-col items-center">
+                        <svg class="w-40 h-20" viewBox="0 0 150 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 5h140v60H80V40H5V5z" fill="#fef08a" stroke="#ca8a04" stroke-width="4" rx="6" />
+                            <path d="M5 45h75v20h60v-6h-135v-14z" fill="#fde047" />
+                            <text x="85" y="28" font-family="'Lexend', sans-serif" font-size="14" font-weight="bold" fill="#854d0e">ENTER ↵</text>
+                        </svg>
+                        <span class="text-xs text-indigo-500 font-extrabold mt-1">Teclado ABNT2 tem essa forma de "L" invertido!</span>
+                    </div>
+                `
+            },
+            {
+                title: "A Borracha Mágica",
+                tip: "Ela fica logo acima do Enter e apaga o que você escreveu de trás para frente!",
+                question: "Qual é a tecla BACKSPACE (Apagar)?",
+                options: [
+                    { text: "Acima do Enter", correct: true },
+                    { text: "Letra B", correct: false },
+                    { text: "Sair", correct: false }
+                ],
+                physicalKey: "Backspace",
+                feedbackKeyName: "Backspace",
+                // SVG da Borracha Mágica
+                svgMarkup: `
+                    <div class="flex flex-col items-center">
+                        <svg class="w-48 h-16" viewBox="0 0 180 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="5" y="5" width="170" height="42" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="4" />
+                            <rect x="5" y="43" width="170" height="12" rx="4" fill="#fed7aa" />
+                            <text x="90" y="32" font-family="'Lexend', sans-serif" font-size="13" font-weight="bold" fill="#9a3412" text-anchor="middle">← BACKSPACE</text>
+                        </svg>
+                        <span class="text-xs text-indigo-500 font-extrabold mt-1">Procure pela seta apontando para a esquerda!</span>
+                    </div>
+                `
+            },
+            {
+                title: "O Escudo Maiúsculo",
+                tip: "Segure essa tecla e aperte qualquer letra para fazê-la ficar GRANDE!",
+                question: "Qual tecla ativa as Letras Maiúsculas?",
+                options: [
+                    { text: "Alternar", correct: false },
+                    { text: "Letra S", correct: false },
+                    { text: "Tecla Shift", correct: true }
+                ],
+                physicalKey: "Shift",
+                feedbackKeyName: "Shift",
+                // SVG da Tecla Shift
+                svgMarkup: `
+                    <div class="flex flex-col items-center">
+                        <svg class="w-44 h-16" viewBox="0 0 160 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="5" y="5" width="150" height="42" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="4" />
+                            <rect x="5" y="43" width="150" height="12" rx="4" fill="#bae6fd" />
+                            <text x="80" y="32" font-family="'Lexend', sans-serif" font-size="13" font-weight="bold" fill="#0369a1" text-anchor="middle">⇧ SHIFT</text>
+                        </svg>
+                        <span class="text-xs text-indigo-500 font-extrabold mt-1">Fica nos cantos do teclado com uma seta de subir!</span>
+                    </div>
+                `
+            },
+            {
+                title: "O Mistério do Café",
+                tip: "Lembre-se da regra: Primeiro apertamos o acento, depois a vogal!",
+                question: "Onde fica o ACENTO AGUDO (´)?",
+                options: [
+                    { text: "Perto do P ou Enter", correct: true },
+                    { text: "Til (~)", correct: false },
+                    { text: "Mais (+)", correct: false }
+                ],
+                physicalKey: "DeadAccent",
+                alternativeKeys: ["'", "´", "[", "Dead"],
+                feedbackKeyName: "Acento Agudo",
+                // SVG do Acento Agudo
+                svgMarkup: `
+                    <div class="flex flex-col items-center">
+                        <svg class="w-24 h-16" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="5" y="5" width="70" height="42" rx="8" fill="#f5f5f5" stroke="#737373" stroke-width="4" />
+                            <rect x="5" y="43" width="70" height="12" rx="4" fill="#e5e5e5" />
+                            <!-- Acento Agudo Visível -->
+                            <path d="M35 15 L45 28" stroke="#171717" stroke-width="5" stroke-linecap="round"/>
+                            <text x="25" y="32" font-family="'Lexend', sans-serif" font-size="11" font-weight="bold" fill="#737373">\`</text>
+                        </svg>
+                        <span class="text-xs text-indigo-500 font-extrabold mt-1">Fica ao lado do "P" ou no mesmo botão do [ ] !</span>
+                    </div>
+                `
+            },
+            {
+                title: "O Rabinho do C",
+                tip: "No teclado brasileiro, a letra Ç tem uma tecla única e mágica só para ela!",
+                question: "Ache o CEDILHA (Ç) no seu teclado!",
+                options: [
+                    { text: "C Normal", correct: false },
+                    { text: "Ao lado do L e K", correct: true },
+                    { text: "Ponto e vírgula", correct: false }
+                ],
+                physicalKey: "ç",
+                feedbackKeyName: "Cedilhar (Ç)",
+                // SVG do Cedilha
+                svgMarkup: `
+                    <div class="flex flex-col items-center">
+                        <svg class="w-24 h-16" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="5" y="5" width="70" height="42" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="4" />
+                            <rect x="5" y="43" width="70" height="12" rx="4" fill="#bbf7d0" />
+                            <text x="40" y="32" font-family="'Lexend', sans-serif" font-size="20" font-weight="bold" fill="#14532d" text-anchor="middle">Ç</text>
+                        </svg>
+                        <span class="text-xs text-indigo-500 font-extrabold mt-1">Teclados brasileiros têm uma tecla Ç exclusiva!</span>
+                    </div>
+                `
+            },
+            {
+                title: "Estilos de Letra",
+                tip: "Olhe bem no menu superior do seu Word ou Google Documentos!",
+                question: "Qual botão deixa a letra \"gordinha\" (Negrito)?",
+                options: [
+                    { text: "Negrito (N)", correct: true },
+                    { text: "Itálico (I)", correct: false },
+                    { text: "Sublinhado (S)", correct: false }
+                ],
+                physicalKey: "n",
+                feedbackKeyName: "N (de Negrito)",
+                // SVG do Botão de Negrito do Editor de Texto
+                svgMarkup: `
+                    <div class="flex flex-col items-center">
+                        <svg class="w-24 h-16" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="5" y="5" width="70" height="42" rx="8" fill="#f3e8ff" stroke="#9333ea" stroke-width="4" />
+                            <rect x="5" y="43" width="70" height="12" rx="4" fill="#e9d5ff" />
+                            <text x="40" y="32" font-family="'Lexend', sans-serif" font-size="22" font-weight="900" fill="#581c87" text-anchor="middle">N</text>
+                        </svg>
+                        <span class="text-xs text-indigo-500 font-extrabold mt-1">Fica no topo dos editores de texto!</span>
+                    </div>
+                `
+            }
+        ];
+
+        let currentLevelIndex = 0;
+        let fontScale = 16; 
+        let ttsActive = false;
+        let audioContext = null;
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Toca um bipe alegre para o acerto
+        function playSuccessSound() {
+            initAudio();
+            if (!audioContext) return;
+            const now = audioContext.currentTime;
+            
+            const osc1 = audioContext.createOscillator();
+            const gain1 = audioContext.createGain();
+            osc1.connect(gain1);
+            gain1.connect(audioContext.destination);
+            osc1.type = "sine";
+            osc1.frequency.setValueAtTime(523.25, now); 
+            gain1.gain.setValueAtTime(0.1, now);
+            gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+            osc1.start(now);
+            osc1.stop(now + 0.3);
+
+            const osc2 = audioContext.createOscillator();
+            const gain2 = audioContext.createGain();
+            osc2.connect(gain2);
+            gain2.connect(audioContext.destination);
+            osc2.type = "sine";
+            osc2.frequency.setValueAtTime(659.25, now + 0.1); 
+            gain2.gain.setValueAtTime(0.1, now + 0.1);
+            gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+            osc2.start(now + 0.1);
+            osc2.stop(now + 0.4);
+        }
+
+        // Toca som de erro sutil para não frustrar o aluno
+        function playErrorSound() {
+            initAudio();
+            if (!audioContext) return;
+            const now = audioContext.currentTime;
+            
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(180, now);
+            gain.gain.setValueAtTime(0.15, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+            osc.start(now);
+            osc.stop(now + 0.25);
+        }
+
+        // Fanfarra da vitória
+        function playVictorySound() {
+            initAudio();
+            if (!audioContext) return;
+            const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 1046.50]; 
+            const now = audioContext.currentTime;
+            notes.forEach((freq, idx) => {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(freq, now + (idx * 0.1));
+                gain.gain.setValueAtTime(0.08, now + (idx * 0.1));
+                gain.gain.exponentialRampToValueAtTime(0.001, now + (idx * 0.1) + 0.6);
+                osc.start(now + (idx * 0.1));
+                osc.stop(now + (idx * 0.1) + 0.6);
+            });
+        }
+
+        function toggleAudioReading() {
+            ttsActive = !ttsActive;
+            const btn = document.getElementById("tts-toggle");
+            const icon = document.getElementById("speaker-icon");
+            
+            if (ttsActive) {
+                btn.classList.add("bg-indigo-600", "text-white");
+                btn.classList.remove("bg-slate-100", "text-slate-700");
+                icon.textContent = "🛑";
+                speakCurrentScreen();
+            } else {
+                btn.classList.remove("bg-indigo-600", "text-white");
+                btn.classList.add("bg-slate-100", "text-slate-700");
+                icon.textContent = "🔊";
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function speak(text) {
+            if (!ttsActive) return;
+            window.speechSynthesis.cancel(); 
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = "pt-BR";
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function speakCurrentScreen() {
+            if (!ttsActive) return;
+
+            const isIntro = !document.getElementById("intro-screen").classList.contains("hidden");
+            const isLevel = !document.getElementById("level-screen").classList.contains("hidden");
+            const isVictory = !document.getElementById("victory-screen").classList.contains("hidden");
+
+            if (isIntro) {
+                speak("O Desafio do Teclado Mágico. Aprenda a usar o teclado brincando! Clique no botão azul no fim da página para começar.");
+            } else if (isLevel) {
+                const lvl = gameLevels[currentLevelIndex];
+                speak(`Desafio ${currentLevelIndex + 1}. Tema: ${lvl.title}. Dica: ${lvl.tip}. Pergunta: ${lvl.question}`);
+            } else if (isVictory) {
+                speak("Parabéns! Você venceu e agora é um Mestre Digital do Teclado!");
+            }
+        }
+
+        function toggleDyslexiaFont() {
+            document.body.classList.toggle("dyslexia-font");
+        }
+
+        function toggleContrast() {
+            document.body.classList.toggle("bg-slate-900");
+            document.body.classList.toggle("text-white");
+            document.body.classList.toggle("dark-mode");
+            document.querySelectorAll("#game-card, header, #keyboard-modal .bg-white").forEach(el => {
+                el.classList.toggle("bg-slate-800");
+                el.classList.toggle("border-slate-700");
+                el.classList.toggle("text-white");
+                el.classList.toggle("bg-white");
+            });
+            document.querySelectorAll("button").forEach(btn => {
+                if(!btn.classList.contains("bg-indigo-600") && !btn.classList.contains("bg-emerald-500") && !btn.classList.contains("bg-amber-100")) {
+                    btn.classList.toggle("bg-slate-700");
+                    btn.classList.toggle("text-white");
+                }
+            });
+        }
+
+        function changeFontSize(val) {
+            fontScale = Math.max(12, Math.min(28, fontScale + val));
+            document.body.style.fontSize = fontScale + "px";
+        }
+
+        function toggleKeyboardMap(show) {
+            const modal = document.getElementById("keyboard-modal");
+            if (show) {
+                modal.classList.remove("hidden");
+                speak("Janela aberta com o teclado pedagógico de cores de referência.");
+            } else {
+                modal.classList.add("hidden");
+            }
+        }
+
+        function startGame() {
+            document.getElementById("intro-screen").classList.add("hidden");
+            document.getElementById("level-screen").classList.remove("hidden");
+            document.getElementById("progress-container").classList.remove("hidden");
+            currentLevelIndex = 0;
+            loadLevel();
+        }
+
+        function loadLevel() {
+            const level = gameLevels[currentLevelIndex];
+            
+            // Atualiza Barra de Progresso Superior
+            document.getElementById("level-title").textContent = `Desafio ${currentLevelIndex + 1} de ${gameLevels.length}`;
+            const percentage = (currentLevelIndex / gameLevels.length) * 100;
+            document.getElementById("progress-bar").style.width = percentage + "%";
+
+            // Modifica Badge de Categoria de Acordo com o nível
+            const badge = document.getElementById("level-badge");
+            if (currentLevelIndex < 3) {
+                badge.textContent = "Nível 1: Teclas Básicas";
+                badge.className = "text-xs bg-indigo-100 text-indigo-800 font-bold px-2.5 py-1 rounded-full";
+            } else if (currentLevelIndex < 6) {
+                badge.textContent = "Nível 2: Escrita e Acentos";
+                badge.className = "text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full";
+            } else {
+                badge.textContent = "Nível Final: Formatação";
+                badge.className = "text-xs bg-purple-100 text-purple-800 font-bold px-2.5 py-1 rounded-full";
+            }
+
+            // Popula os Textos do Desafio
+            document.getElementById("challenge-title").textContent = level.title;
+            document.getElementById("challenge-tip").textContent = level.tip;
+            document.getElementById("challenge-question").textContent = level.question;
+
+            // Insere o SVG dinâmico da tecla
+            document.getElementById("key-visual-container").innerHTML = level.svgMarkup;
+
+            // Limpa Feedback Anterior
+            clearFeedback();
+
+            // Monta o Grid das Respostas Visuais
+            const grid = document.getElementById("options-grid");
+            grid.innerHTML = "";
+            level.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "p-4 border-2 border-slate-200 hover:border-indigo-500 rounded-2xl font-bold text-lg transition-all-300 text-center hover:bg-indigo-50/50 bg-slate-50/50 shadow-sm flex flex-col items-center justify-center gap-1.5 key-3d";
+                
+                const numSpan = document.createElement("span");
+                numSpan.className = "text-xs text-indigo-500 font-extrabold uppercase";
+                numSpan.textContent = `Opção ${idx + 1}`;
+                
+                const textSpan = document.createElement("span");
+                textSpan.textContent = opt.text;
+                
+                btn.appendChild(numSpan);
+                btn.appendChild(textSpan);
+                btn.onclick = () => selectOption(opt.correct);
+                grid.appendChild(btn);
+            });
+
+            // Lê as instruções atualizadas se a voz estiver ligada
+            setTimeout(speakCurrentScreen, 300);
+        }
+
+        window.addEventListener("keydown", function(e) {
+            if (document.getElementById("level-screen").classList.contains("hidden")) {
+                return;
+            }
+
+            const currentLevel = gameLevels[currentLevelIndex];
+            
+            if (e.key === " " && currentLevel.physicalKey === " ") {
+                e.preventDefault();
+            }
+
+            let matchesPhysicalKey = false;
+
+            // Tratamento especial para Acento Agudo (Dead Key do português brasileiro)
+            if (currentLevel.physicalKey === "DeadAccent") {
+                if (currentLevel.alternativeKeys.includes(e.key) || e.code === "Quote" || e.code === "BracketLeft") {
+                    matchesPhysicalKey = true;
+                }
+            } else if (e.key.toLowerCase() === currentLevel.physicalKey.toLowerCase()) {
+                matchesPhysicalKey = true;
+            }
+
+            if (matchesPhysicalKey) {
+                showSuccessFeedback(`Incrível! Você apertou a tecla física [ ${currentLevel.feedbackKeyName} ] no seu teclado!`);
+                setTimeout(nextLevel, 1800);
+            } else {
+                showErrorFeedback(`Essa foi a tecla [ ${e.key.toUpperCase()} ]. Procure pela tecla desenhada na tela!`);
+            }
+        });
+
+        // Seleção via clique na opção da tela
+        function selectOption(isCorrect) {
+            if (isCorrect) {
+                const currentLevel = gameLevels[currentLevelIndex];
+                showSuccessFeedback(`Correto! Essa é a função da tecla [ ${currentLevel.feedbackKeyName} ]!`);
+                setTimeout(nextLevel, 1800);
+            } else {
+                showErrorFeedback("Resposta incorreta. Leia a Super Dica com atenção!");
+            }
+        }
+
+        function showSuccessFeedback(msg) {
+            playSuccessSound();
+            const area = document.getElementById("feedback-area");
+            area.textContent = "🌟 " + msg;
+            area.className = "h-12 flex items-center justify-center font-bold text-base rounded-xl transition-all-300 bg-emerald-100 text-emerald-800 border border-emerald-300 px-4 py-2";
+            speak("Correto! Muito bem.");
+        }
+
+        function showErrorFeedback(msg) {
+            playErrorSound();
+            const area = document.getElementById("feedback-area");
+            area.textContent = "❌ " + msg;
+            area.className = "h-12 flex items-center justify-center font-bold text-base rounded-xl transition-all-300 bg-rose-100 text-rose-800 border border-rose-300 px-4 py-2 animate-shake";
+            speak("Tente mais uma vez!");
+        }
+
+        function clearFeedback() {
+            const area = document.getElementById("feedback-area");
+            area.textContent = "";
+            area.className = "h-12 flex items-center justify-center font-bold text-lg rounded-xl transition-all-300";
+        }
+
+        function nextLevel() {
+            currentLevelIndex++;
+            if (currentLevelIndex < gameLevels.length) {
+                loadLevel();
+            } else {
+                showVictory();
+            }
+        }
+
+        function showVictory() {
+            playVictorySound();
+            document.getElementById("level-screen").classList.add("hidden");
+            document.getElementById("progress-container").classList.add("hidden");
+            document.getElementById("victory-screen").classList.remove("hidden");
+            setTimeout(speakCurrentScreen, 500);
+        }
+
+        function restartGame() {
+            document.getElementById("victory-screen").classList.add("hidden");
+            document.getElementById("intro-screen").classList.remove("hidden");
+        }
+
+        window.onload = function() {
+            window.speechSynthesis.cancel();
+        };
+    </script>
+</body>
+</html>
